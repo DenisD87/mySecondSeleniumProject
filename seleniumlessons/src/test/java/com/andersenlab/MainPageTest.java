@@ -47,12 +47,13 @@ public class MainPageTest {
     @Test
     public void openQaPage() {
         assertMoveQaPage(mainPage.moveToQaLink()
-                .clickQALink());
+                .clickQALink()
+                .getTitle());
     }
 
     @Step("Проверка перехода на страницу")
-    public void assertMoveQaPage(QaPage qaPage) {
-        Assertions.assertEquals("QA in full-cycle of software development", qaPage.getTitle(), "Переход на страницу не выполнен");
+    public void assertMoveQaPage(String title) {
+        Assertions.assertEquals("QA in full-cycle of software development", title, "Переход на страницу не выполнен");
     }
 
     @AfterEach
