@@ -1,14 +1,16 @@
 package com.andersenlab;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import io.qameta.allure.Epic;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
 
 import java.time.Duration;
+import java.util.List;
 
 public class MainPageTest {
     private WebDriver driver;
@@ -22,24 +24,34 @@ public class MainPageTest {
         driver.manage().window().maximize();
         driver.get("https://andersenlab.com/");
         mainPage = new MainPage(driver);
+        mainPage.clickCookiesButton();
     }
 
+    @DisplayName("Подчеркивание при наведении на элемент 'Java'")
+    @Epic(value = "Lesson 15")
     @Test
     public void underlineOnHoverToJavaElement() {
-        mainPage.clickCookiesButton();
         String borderBottom = mainPage.moveToJavaElement();
-        Assertions.assertEquals("1px solid rgb(255, 219, 0)", borderBottom);
+        Assertions.assertEquals("1px solid rgb(255, 219, 0)", borderBottom, "Подчеркивание не соответсвует ожидаемому результату");
     }
 
+    @DisplayName("Переход на страницу 'Quality Assurance' по ссылке в footer")
+    @Epic(value = "Lesson 15")
     @Test
-    public void openQAPage() {
-        mainPage.clickCookiesButton();
-        QAPage qaPage = mainPage.clickQALink();
-        Assertions.assertEquals("QA in full-cycle of software development", qaPage.getTitle());
+    public void openQaPage() {
+        QaPage qaPage = mainPage.clickQALink();
+        Assertions.assertEquals("QA in full-cycle of software development", qaPage.getTitle(), "Переход на страницу не выполнен");
     }
 
     @AfterEach
     public void tearDown() {
-        driver.close();
+        LogEntries browserLogs = driver.manage().logs().get(LogType.BROWSER);
+        List<LogEntry> allLogRows = browserLogs.getAll();
+        if (allLogRows.isEmpty()) {
+            System.out.println("Logs are empty");
+        } else {
+            allLogRows.forEach(System.out::println);
+        }
+        driver.quit();
     }
 }

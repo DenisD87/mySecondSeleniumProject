@@ -2,10 +2,10 @@ package com.andersenlab;
 
 import org.openqa.selenium.WebDriver;
 
-public class QAPage {
+public class QaPage {
     private WebDriver driver;
 
-    public QAPage(WebDriver driver) {
+    public QaPage(WebDriver driver) {
         this.driver = driver;
     }
 
