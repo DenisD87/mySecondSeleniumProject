@@ -47,7 +47,7 @@ public class MainPageTest {
     @Test
     public void openQaPage() {
         assertMoveQaPage(mainPage.moveToQaLink()
-                .clickQALink()
+                .clickQaLink()
                 .getTitle());
     }
 

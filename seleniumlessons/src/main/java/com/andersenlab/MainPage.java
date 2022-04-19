@@ -61,7 +61,7 @@ public class MainPage {
     }
 
     @Step("Кликнуть на ссылку 'Quality Assurance' в footer")
-    public QaPage clickQALink() {
+    public QaPage clickQaLink() {
         builder.click(qaLink)
                 .build()
                 .perform();
