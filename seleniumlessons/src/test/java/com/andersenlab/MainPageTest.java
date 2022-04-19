@@ -2,6 +2,7 @@ package com.andersenlab;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -31,7 +32,13 @@ public class MainPageTest {
     @Epic(value = "Lesson 15")
     @Test
     public void underlineOnHoverToJavaElement() {
-        String borderBottom = mainPage.moveToJavaElement();
+        assertBorderBottom(mainPage.moveToTechStackElement()
+                .moveToJavaElement()
+                .getCssValue());
+    }
+
+    @Step("Проверка полученного css-свойства")
+    public void assertBorderBottom(String borderBottom) {
         Assertions.assertEquals("1px solid rgb(255, 219, 0)", borderBottom, "Подчеркивание не соответсвует ожидаемому результату");
     }
 
@@ -39,7 +46,12 @@ public class MainPageTest {
     @Epic(value = "Lesson 15")
     @Test
     public void openQaPage() {
-        QaPage qaPage = mainPage.clickQALink();
+        assertMoveQaPage(mainPage.moveToQaLink()
+                .clickQALink());
+    }
+
+    @Step("Проверка перехода на страницу")
+    public void assertMoveQaPage(QaPage qaPage) {
         Assertions.assertEquals("QA in full-cycle of software development", qaPage.getTitle(), "Переход на страницу не выполнен");
     }
 

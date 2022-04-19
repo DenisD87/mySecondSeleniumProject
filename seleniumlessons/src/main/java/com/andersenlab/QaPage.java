@@ -1,5 +1,6 @@
 package com.andersenlab;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 
 public class QaPage {
@@ -9,6 +10,7 @@ public class QaPage {
         this.driver = driver;
     }
 
+    @Step("Получить title")
     public String getTitle() {
         return driver.getTitle();
     }
